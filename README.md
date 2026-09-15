@@ -11,7 +11,6 @@
 | | |
 |---|---|
 | **Module** | Réalité Augmentée / Réalité Virtuelle |
-| **Volume horaire** | 21 h |
 | **Année** | 2ᵉ année |
 | **Public** | Étudiant·e·s développeur·se·s (bases solides en POO et développement d'applications) |
 | **Fil rouge** | 5 ateliers progressifs : **déployer → comprendre → prototyper → développer → livrer un MVP** |
@@ -62,8 +61,8 @@ une dépendance technique du projet.
 - concevoir, développer et livrer une **application AR selon une logique MVP** ;
 - travailler en groupe en respectant des jalons et une démarche de prototypage.
 
-Ces objectifs couvrent les trois sections du syllabus : **Introduction (6 h)**,
-**Développement d'applications (8 h)**, **Cas pratiques / prototypage (7 h)**.
+Ces objectifs couvrent les trois sections du syllabus : **Introduction**,
+**Développement d'applications** et **Cas pratiques / prototypage**.
 
 ## 2. Compétences visées (référentiel niveau 7)
 
@@ -101,7 +100,7 @@ Ces objectifs couvrent les trois sections du syllabus : **Introduction (6 h)**,
 ### 4.1 Pourquoi le **WebAR** plutôt qu'Unity + AR Foundation
 
 Unity est la référence industrielle de la RA mobile, et il reste étudié en **annexe A**.
-Mais pour un module de 21 h avec un parc matériel hétérogène, le WebAR l'emporte sur cinq
+Mais pour ce module, avec un parc matériel hétérogène, le WebAR l'emporte sur cinq
 critères :
 
 | Critère | WebAR (retenu) | Unity + AR Foundation |
@@ -169,16 +168,15 @@ sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'expos
 
 > Les conditions des offres gratuites évoluent vite : **à revérifier en début de module**.
 
-## 5. Progression et volumes horaires
+## 5. Progression
 
-| # | Atelier | Section du syllabus | Format | Durée |
-|---|---------|--------------------|--------|-------|
-| **0** | **Mettre sa chaîne AR en ligne** | 2. Développement | TP pas-à-pas | **1 h 30** |
-| **1** | **Comprendre l'AR** | 1. Introduction | Recherche guidée + restitution | **3 h 30** |
-| **2** | **« Hello World » AR** | 2. Développement | TP pas-à-pas | **3 h** |
-| **3** | **Suivi par marqueur et par image** | 2. Développement | TD encadré par jalons | **6 h** |
-| **4** | **Projet : MVP AR en groupe** | 3. Cas pratiques | Projet + soutenance | **7 h** |
-| | **Total** | | | **21 h** |
+| # | Atelier | Section du syllabus | Format |
+|---|---------|--------------------|--------|
+| **0** | **Mettre sa chaîne AR en ligne** | 2. Développement | TP pas-à-pas |
+| **1** | **Comprendre l'AR** | 1. Introduction | Recherche guidée + restitution |
+| **2** | **« Hello World » AR** | 2. Développement | TP pas-à-pas |
+| **3** | **Suivi par marqueur et par image** | 2. Développement | TD encadré par jalons |
+| **4** | **Projet : MVP AR en groupe** | 3. Cas pratiques | Projet + soutenance |
 
 > L'atelier 0 installe l'infrastructure et doit être terminé avant tout le reste : il
 > conditionne l'accès à la caméra. Les ateliers 1 et 2 posent le socle conceptuel et
@@ -245,7 +243,7 @@ Légende — ✅ fourni et fonctionnel · 🚧 **à compléter par vous** (cherc
 
 # 🧩 Atelier 0 — Mettre sa chaîne AR en ligne
 
-**Rattachement** : Section 2 « Développement d'applications » · **Durée** : 1 h 30 ·
+**Rattachement** : Section 2 « Développement d'applications » ·
 **Modalité** : TP individuel pas-à-pas.
 
 ## Objectifs
@@ -259,7 +257,7 @@ Légende — ✅ fourni et fonctionnel · 🚧 **à compléter par vous** (cherc
 
 ### 🧩 Séquence 0.1 — GitHub
 
-**Objectif** : créer votre dépôt de travail · **Difficulté** : très facile (~10 min)
+**Objectif** : créer votre dépôt de travail · **Difficulté** : très facile
 
 **Faites un *fork* de ce projet.** Si besoin, voici une vidéo d'accompagnement pour vous
 aider à « forker » un dépôt GitHub : [Forker ce projet](https://youtu.be/p33-7XQ29zQ)
@@ -277,7 +275,7 @@ cd Atelier_AR
 
 ### 🧩 Séquence 0.2 — Création d'un site chez PythonAnywhere
 
-**Objectif** : créer un hébergement · **Difficulté** : faible (~15 min)
+**Objectif** : créer un hébergement · **Difficulté** : faible
 
 1. Rendez-vous sur **<https://www.pythonanywhere.com/>** et créez un compte gratuit
    (offre *Beginner*).
@@ -322,7 +320,7 @@ cd Atelier_AR
 
 ### 🧩 Séquence 0.3 — Les Actions GitHub (industrialisation continue)
 
-**Objectif** : automatiser la mise à jour de votre hébergement · **Difficulté** : moyenne (~30 min)
+**Objectif** : automatiser la mise à jour de votre hébergement · **Difficulté** : moyenne
 
 Dans le dépôt que vous venez de forker, vous avez un fichier **`deploy-pythonanywhere.yml`**
 déposé dans le répertoire `.github/workflows`. Ce fichier a pour objectif d'automatiser le
@@ -375,7 +373,7 @@ lecture d'un journal de CI.
 
 ### 🗺️ Séquence 0.4 — Mise en service et validation
 
-**Objectif** : prouver que la chaîne AR est opérationnelle · **Difficulté** : faible (~20 min)
+**Objectif** : prouver que la chaîne AR est opérationnelle · **Difficulté** : faible
 
 Cette séquence est un **jalon bloquant** : tant que les quatre vérifications ci-dessous ne
 passent pas, les ateliers 2 et 3 sont impossibles.
@@ -436,7 +434,7 @@ soutenance.
 
 # 🧩 Atelier 1 — Comprendre l'AR
 
-**Rattachement** : Section 1 « Introduction à la RA et RV » · **Durée** : 3 h 30 ·
+**Rattachement** : Section 1 « Introduction à la RA et RV » ·
 **Modalité** : binômes, recherche guidée puis restitution orale courte.
 
 ## Objectifs
@@ -463,7 +461,7 @@ soutenance.
 5. **Cas d'usage** : un exemple documenté par catégorie (marketing, gaming, formation), avec
    bénéfice métier et limite technique associée.
 
-> 🔬 **Séquence démonstration (30 min, animée par l'enseignant·e) — le SLAM.**
+> 🔬 **Séquence démonstration (animée par l'enseignant·e) — le SLAM.**
 > Le SLAM n'étant pas praticable en WebAR universel (cf. § 4.3), il est montré ici :
 > détection de plans en direct via `<model-viewer>` sur un appareil compatible (mesurez la
 > dérive quand on masque la caméra !), puis lecture commentée de l'API `hit-test` de WebXR
@@ -502,7 +500,7 @@ couvrant :
 
 # 🧩 Atelier 2 — « Hello World » AR
 
-**Rattachement** : Section 2 « Développement d'applications » · **Durée** : 3 h ·
+**Rattachement** : Section 2 « Développement d'applications » ·
 **Modalité** : TP individuel guidé pas-à-pas.
 
 > ⛔ **Prérequis bloquant** : les 4 vérifications de la séquence 0.4 doivent passer.
@@ -619,7 +617,7 @@ et un appareil iOS** (mettez-vous en binôme si vous n'avez pas les deux).
 
 # 🧩 Atelier 3 — Suivi par marqueur et par image
 
-**Rattachement** : Section 2 « Développement d'applications » · **Durée** : 6 h ·
+**Rattachement** : Section 2 « Développement d'applications » ·
 **Modalité** : TD encadré, binômes, jalons avec points de contrôle par l'enseignant·e.
 
 ## Principe
@@ -766,16 +764,14 @@ réserver une route d'administration au niveau `admin`.
 - Versionner par petits *commits* signifiants et en français ou en anglais, mais de façon
   cohérente.
 
-## Déroulé indicatif (6 h)
+## Déroulé indicatif
 
-| Temps | Contenu |
-|---|---|
-| 0 h 00 – 0 h 30 | Cadrage, rappel de l'architecture cible, prise en main des assets |
-| 0 h 30 – 2 h 00 | Jalons J1–J2 (marqueur, modèle, échelle) |
-| 2 h 00 – 3 h 30 | Jalon J3 (suivi d'image MindAR, compilation de cible) |
-| 3 h 30 – 4 h 45 | Jalon J4 (API + UI) et gestion des erreurs |
-| 4 h 45 – 5 h 30 | Jalon J5 (exercices 3.1 et 3.2) |
-| 5 h 30 – 6 h 00 | Bonus J6, nettoyage du dépôt, démo croisée entre binômes |
+1. **Cadrage** : rappel de l'architecture cible, prise en main des assets.
+2. **Jalons J1–J2** : marqueur, modèle, échelle.
+3. **Jalon J3** : suivi d'image MindAR, compilation de la cible.
+4. **Jalon J4** : API et UI, puis gestion des cas d'erreur.
+5. **Jalon J5** : exercices 3.1 et 3.2.
+6. **Clôture** : bonus J6, nettoyage du dépôt, démo croisée entre binômes.
 
 ## Livrable
 
@@ -798,7 +794,7 @@ réserver une route d'administration au niveau `admin`.
 
 # 🧩 Atelier 4 — Projet : application AR (MVP en groupe)
 
-**Rattachement** : Section 3 « Cas pratiques : prototypage » · **Durée** : 7 h ·
+**Rattachement** : Section 3 « Cas pratiques : prototypage » ·
 **Modalité** : projet en groupe (3–4 personnes), **logique MVP**, clôturé par une
 soutenance-démo.
 
@@ -841,7 +837,7 @@ Tous ces sujets sont réalisables avec la pile du module (marqueur ou suivi d'im
 | Marketing | **Carte de visite augmentée** | Suivi d'image sur la carte → avatar + liens | MindAR |
 
 > Les groupes peuvent proposer leur **propre sujet**, sous validation de l'enseignant·e
-> (faisabilité en 7 h + périmètre MVP réaliste).
+> (faisabilité dans le cadre de l'atelier + périmètre MVP réaliste).
 
 ## Livrables attendus
 
@@ -855,7 +851,7 @@ Tous ces sujets sont réalisables avec la pile du module (marqueur ou suivi d'im
 
 | Jalon | Attendu |
 |---|---|
-| **J0** (fin H1) | Sujet validé, *user story* principale, périmètre MVP arbitré |
+| **J0** (démarrage) | Sujet validé, *user story* principale, périmètre MVP arbitré |
 | **J1** (mi-parcours) | Cœur fonctionnel **déployé** et démontrable (itération 1) |
 | **J2** (fin) | MVP livré en ligne, dossier rendu, soutenance |
 
@@ -1058,5 +1054,5 @@ tout l'intérêt de l'avoir vu en WebAR d'abord.
 
 ---
 
-*Document pédagogique — Module RA/RV, 21 h, Titre de niveau 7. À adapter selon le parc
+*Document pédagogique — Module RA/RV, Titre de niveau 7. À adapter selon le parc
 matériel et le calendrier de la promotion.*
