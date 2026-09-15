@@ -25,14 +25,14 @@
       "slug": "exemple",
       "nom": "Modèle d'exemple",
       "description": "Entrée de démonstration. Remplacez-la par votre premier modèle à l'atelier 2 : déposez un fichier .glb dans static/models/, puis renseignez les champs ci-dessous. La page d'accueil signale en orange les fichiers déclarés mais absents.",
-      "glb": "exemple.glb",
-      "usdz": "exemple.usdz",
+      "glb": "Woman.glb",
+      "usdz": "Woman.usdz",
       "poster": null,
       "cible_mind": null,
       "cible_index": 0,
       "echelle": 0.2,
-      "auteur": "à renseigner",
-      "licence": "à renseigner"
+      "auteur": "Boris",
+      "licence": "Libre"
     }
   ]
 }
