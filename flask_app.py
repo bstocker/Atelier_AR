@@ -16,7 +16,7 @@ Organisation en couches (attendu d'architecture du module) :
     - couche API        : les routes /api/*, consommées par les scènes AR
     - couche présentation : templates/ + static/
 
-Les sections marquées « TODO ATELIER n » sont le travail demandé aux étudiant·e·s.
+Les sections marquées « TODO ATELIER n » sont le travail demandé aux étudiants.
 """
 
 import json
@@ -333,8 +333,9 @@ def erreur(exception):
 
 
 if __name__ == "__main__":
-    # Utile en local uniquement. PythonAnywhere n'exécute jamais ce bloc :
-    # son serveur WSGI importe directement l'objet `app`.
-    # Note : http://localhost est considéré comme un contexte sécurisé, la
-    # caméra fonctionne donc aussi en local sur votre poste.
+    # Utile dans votre codespace uniquement. PythonAnywhere n'exécute jamais ce
+    # bloc : son serveur WSGI importe directement l'objet `app`.
+    # Note : Codespaces expose le port 5000 sur une URL https://…app.github.dev,
+    # donc en contexte sécurisé — la caméra y fonctionne. Pour tester depuis un
+    # téléphone, passez la visibilité du port à « Public » (onglet PORTS).
     app.run(host="0.0.0.0", port=5000, debug=True)

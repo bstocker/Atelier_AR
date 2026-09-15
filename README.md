@@ -12,18 +12,20 @@
 |---|---|
 | **Module** | Réalité Augmentée / Réalité Virtuelle |
 | **Année** | 2ᵉ année |
-| **Public** | Étudiant·e·s développeur·se·s (bases solides en POO et développement d'applications) |
+| **Modalité** | **Travail individuel** sur les cinq ateliers |
+| **Public** | Étudiants développeurs (bases solides en POO et développement d'applications) |
 | **Fil rouge** | 5 ateliers progressifs : **déployer → comprendre → prototyper → développer → livrer un MVP** |
 | **Technologies** | Flask · Jinja2 · GitHub Actions · PythonAnywhere · `<model-viewer>` · A-Frame + AR.js · MindAR |
+| **Environnement** | **GitHub Codespaces** — aucune installation sur la machine de l'étudiant |
 
 ---
 
 ## Architecture cible
 
 ```
-   Poste de développement              GitHub                        PythonAnywhere
+     GitHub Codespaces               GitHub                        PythonAnywhere
 ┌────────────────────────┐    ┌────────────────────────┐    ┌──────────────────────────┐
-│  VS Code / Codespaces  │    │  Repository (fork)     │    │  Flask (WSGI)            │
+│  VS Code (navigateur)  │    │  Repository (fork)     │    │  Flask (WSGI)            │
 │                        │    │           │            │    │   ├── templates/  Jinja2 │
 │  git commit            │───▶│           ▼            │    │   ├── static/css         │
 │  git push              │    │  GitHub Actions        │    │   └── static/models/*.glb│
@@ -52,16 +54,17 @@ une dépendance technique du projet.
 
 ## 1. Objectifs pédagogiques du module
 
-À l'issue du module, l'étudiant·e est capable de :
+À l'issue du module, l'étudiant est capable de :
 
 - distinguer réalité augmentée (RA), réalité virtuelle (RV) et réalité mixte (RM), et situer une expérience sur le **continuum de Milgram** ;
 - expliquer les grands principes de **suivi** (*tracking*) et de compréhension de scène : marqueur, image, détection de plans, ancrage, estimation de lumière ;
 - **choisir un moteur et un SDK** adaptés à un besoin, et justifier ce choix par des contraintes mesurables (parc matériel, coût, compatibilité) ;
 - **mettre en place une chaîne de déploiement continue** (Git → CI → hébergement) et l'exploiter pour livrer une application immersive ;
 - concevoir, développer et livrer une **application AR selon une logique MVP** ;
-- travailler en groupe en respectant des jalons et une démarche de prototypage.
+- conduire un projet de bout en bout en respectant des jalons et une démarche de
+  prototypage.
 
-Ces objectifs couvrent les trois sections du suivantes : **Introduction**,
+Ces objectifs couvrent les trois sections suivantes : **Introduction**,
 **Développement d'applications** et **Cas pratiques / prototypage**.
 
 ## 2. Compétences visées (référentiel niveau 7)
@@ -82,14 +85,21 @@ Ces objectifs couvrent les trois sections du suivantes : **Introduction**,
 
 | Besoin | Détail |
 |---|---|
-| Un poste de développement | Windows, macOS ou Linux. Un navigateur et un éditeur suffisent. |
-| Un compte GitHub | Gratuit. |
+| **Un navigateur, rien de plus** | Tout le développement se fait dans **GitHub Codespaces** : l'éditeur, Python et le terminal tournent dans le nuage. Windows, macOS, Linux ou tablette. |
+| Un compte GitHub | Gratuit. Inclut le quota Codespaces (voir ci-dessous). |
 | Un compte PythonAnywhere | Gratuit (offre *Beginner*). |
 | **Un smartphone quelconque** | Android **ou** iOS. **Aucune compatibilité ARCore / ARKit n'est requise.** |
 | Une imprimante (atelier 3a) | Pour imprimer le marqueur fiduciaire sur une feuille A4. |
 
-> 🎉 **Pas d'installation.** Ni Unity (20 Go), ni Android SDK, ni Xcode, ni compte
-> développeur Apple, ni câble USB, ni mode développeur à activer sur le téléphone.
+> 🎉 **Rien à installer, nulle part.** Ni Unity (20 Go), ni Android SDK, ni Xcode, ni
+> compte développeur Apple, ni câble USB, ni mode développeur sur le téléphone — et pas
+> même Python ou Git sur votre machine, puisque tout vit dans le codespace.
+>
+> ⚠️ **Quota Codespaces** : un compte GitHub personnel gratuit inclut **120 core-heures
+> par mois** (soit environ 60 h sur une machine 2 cœurs) et 15 Go de stockage. C'est
+> largement suffisant pour le module, à deux conditions : **arrêter son codespace** quand
+> on a fini (*Codespaces → Stop codespace*), et savoir que ce quota gratuit **n'existe pas
+> sur les comptes d'organisation** — travaillez depuis votre compte personnel.
 
 ## 4. Choix technologique — et sa justification
 
@@ -107,7 +117,7 @@ critères :
 |---|---|---|
 | Temps avant la première démo | ~10 min | ~2 h (installation, SDK, build) |
 | Compatibilité du parc | **Tout smartphone** | Liste ARCore/ARKit à vérifier appareil par appareil |
-| Distribution aux étudiant·e·s | Une **URL / un QR code** | APK à transférer, ou Xcode + compte Apple pour iOS |
+| Distribution aux étudiants | Une **URL / un QR code** | APK à transférer, ou Xcode + compte Apple pour iOS |
 | Versionnement Git | Fichiers texte + `.glb` de quelques Mo | Git LFS, `.gitignore` complexe, binaires lourds |
 | Exploite la chaîne PythonAnywhere | **Oui, c'est la condition du HTTPS** | Non — aucun hébergeur web ne compile un APK |
 
@@ -117,7 +127,7 @@ Le choix n'est pas « une techno », mais **trois couches qui correspondent chac
 famille de suivi**. C'est cette correspondance qui structure la progression des
 ateliers.
 
-| Atelier | Bibliothèque | Famille de suivi | Ce que l'étudiant·e apprend |
+| Atelier | Bibliothèque | Famille de suivi | Ce que l'étudiant apprend |
 |---|---|---|---|
 | **2** | **`<model-viewer>`** (Google) | Détection de plan **déléguée à l'OS** | Afficher et poser un modèle `glTF` à l'échelle réelle, sans écrire de code AR |
 | **3a** | **A-Frame + AR.js** | **Marqueurs fiduciaires** (Hiro, *barcode*) | Le graphe de scène 3D en HTML déclaratif ; la notion de marqueur et de pose |
@@ -131,10 +141,10 @@ ateliers.
    applicative dans la scène AR — en fait un « Hello World » idéal et rien de plus.
 2. **AR.js** et **MindAR** font de la **vision par ordinateur en JavaScript**. Ils
    fonctionnent donc sur *n'importe quel* navigateur avec une caméra, indépendamment
-   d'ARCore/ARKit — c'est ce qui garantit de fonctionnement. En
+   d'ARCore/ARKit — c'est ce qui garantit le fonctionnement sur l'ensemble du parc. En
    contrepartie, la scène est entièrement sous votre contrôle : on peut y brancher l'API
    Flask, de l'UI, de la logique métier.
-3. **A-Frame est déclaratif** : la scène 3D s'écrit en balises HTML. Les utilisateurs
+3. **A-Frame est déclaratif** : la scène 3D s'écrit en balises HTML. Les étudiants
    *voient* le graphe de scène, les repères et les transformations dans le DOM, là où un
    éditeur graphique les cacherait dans des panneaux.
 
@@ -151,7 +161,7 @@ tous les iPhone de la promotion.
 👉 **Conséquence pédagogique assumée :** le **SLAM et l'ancrage** ne font donc pas l'objet
 d'un TP. Ils sont traités **théoriquement en atelier 1** et **démontrés par votre enseignant**
 sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'exposer). Les
-étudiant·e·s qui veulent les manipuler trouveront la voie WebXR et Unity en **annexe A**.
+étudiants qui veulent les manipuler trouveront la voie WebXR et Unity en **annexe A**.
 
 ### 4.4 Adéquation à PythonAnywhere
 
@@ -160,9 +170,9 @@ sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'expos
 | **HTTPS avec certificat valide** | ✅ **C'est l'atout décisif** : condition d'accès à la caméra. |
 | Pas de mise en veille / pas de *cold start* | ✅ Le QR code projeté en salle répond instantanément. |
 | 100 CPU-secondes / jour | ✅ Sans effet : **tout le calcul AR se fait dans le navigateur**. Le serveur ne rend que du HTML et du JSON. |
-| Système de fichiers persistant (512 Mo) | ✅ Les modèles `.glb` déposés par les étudiant·e·s survivent aux déploiements. |
+| Système de fichiers persistant (512 Mo) | ✅ Les modèles `.glb` déposés par les étudiants survivent aux déploiements. |
 | Pas de WebSockets | ⚠️ Pas d'AR collaborative temps réel. Hors périmètre du module. |
-| Requêtes sortantes limitées à une liste blanche | ⚠️ **Ne concerne que le code serveur.** Les CDN (A-Frame, MindAR) sont chargés **par le navigateur de l'étudiant·e**, donc jamais filtrés. |
+| Requêtes sortantes limitées à une liste blanche | ⚠️ **Ne concerne que le code serveur.** Les CDN (A-Frame, MindAR) sont chargés **par le navigateur de l'étudiant**, donc jamais filtrés. |
 | Pas d'ASGI sur l'offre gratuite | ⚠️ Flask (WSGI) convient ; FastAPI est à éviter. |
 | Web app inactive désactivée après ~1 mois | ⚠️ **À annoncer dès l'atelier 0** : les projets s'éteignent après le module sans reconnexion. |
 
@@ -170,18 +180,18 @@ sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'expos
 
 ## 5. Progression
 
-| # | Atelier | Section du syllabus | Format |
+| # | Atelier | Section du programme | Format |
 |---|---------|--------------------|--------|
 | **0** | **Mettre sa chaîne AR en ligne** | 2. Développement | TP pas-à-pas |
 | **1** | **Comprendre l'AR** | 1. Introduction | Recherche guidée + restitution |
 | **2** | **« Hello World » AR** | 2. Développement | TP pas-à-pas |
 | **3** | **Suivi par marqueur et par image** | 2. Développement | TD encadré par jalons |
-| **4** | **Projet : MVP AR en groupe** | 3. Cas pratiques | Projet + soutenance |
+| **4** | **Projet : MVP AR** | 3. Cas pratiques | Projet + soutenance |
 
 > L'atelier 0 installe l'infrastructure et doit être terminé avant tout le reste : il
 > conditionne l'accès à la caméra. Les ateliers 1 et 2 posent le socle conceptuel et
 > technique ; l'atelier 3 consolide par la pratique guidée ; l'atelier 4 met les acquis en
-> autonomie. Conformément au besion, le projet de l'atelier 4 peut être décliné **en RA ou
+> autonomie. Selon le besoin, le projet de l'atelier 4 peut être décliné **en RA ou
 > en RV**.
 
 ## 6. Arborescence du dépôt
@@ -212,6 +222,9 @@ Atelier_AR/
 │   ├── models/                    📦 vos fichiers .glb et .usdz  (+ mode d'emploi)
 │   ├── markers/                   📦 vos marqueurs .patt         (+ mode d'emploi)
 │   └── targets/                   📦 vos cibles image .mind      (+ mode d'emploi)
+├── .devcontainer/
+│   └── devcontainer.json          ✅ configuration du codespace (fournie)
+├── .gitignore                     ✅ fourni
 └── .github/
     └── workflows/
         └── deploy-pythonanywhere.yml   ✅ déploiement automatique (fourni)
@@ -262,14 +275,26 @@ Légende — ✅ fourni et fonctionnel · 🚧 **à compléter par vous** (cherc
 **Faites un *fork* de ce projet.** Si besoin, voici une vidéo d'accompagnement pour vous
 aider à « forker » un dépôt GitHub : [Forker ce projet](https://youtu.be/p33-7XQ29zQ)
 
-Clonez ensuite votre fork en local (ou ouvrez-le dans un Codespace) :
+**Ouvrez ensuite votre fork dans un codespace.** Sur la page de *votre* fork (et non de
+l'original) : bouton vert **`<> Code`** → onglet **Codespaces** → **Create codespace on
+main**.
+
+Au bout d'une minute, VS Code s'ouvre dans votre navigateur, avec le dépôt déjà cloné,
+Python installé et les dépendances en place. Vous n'aurez **jamais besoin de `git clone`**
+ni d'installer quoi que ce soit sur votre machine.
+
+Pour vérifier que vous êtes au bon endroit, dans le terminal du codespace :
 
 ```bash
-git clone https://github.com/<votre-compte>/Atelier_AR.git
-cd Atelier_AR
+git remote -v      # doit afficher VOTRE compte, pas le dépôt d'origine
 ```
 
-**Notion acquise** : *fork*, dépôt distant (*remote*), clone.
+> 💡 **Retrouver son codespace.** Il persiste entre les séances : retournez sur
+> <https://github.com/codespaces> ou refaites `<> Code → Codespaces`, et reprenez où vous
+> en étiez. **Pensez à l'arrêter en fin de séance** pour économiser votre quota.
+
+**Notion acquise** : *fork*, dépôt distant (*remote*), environnement de développement
+infonuagique.
 
 ---
 
@@ -349,7 +374,7 @@ vos identifiants par exemple.
 | **`PA_TARGET_DIR`** | le répertoire du code source (ex. `/home/monuser/mysite`) | **Web → Source code** |
 | **`PA_WEBAPP_DOMAIN`** | votre site (ex. `monuser.pythonanywhere.com`) | **Web**, en haut de page |
 
-> ⚠️ **Compte européen ?** Si vous vous êtes inscrit·e sur `eu.pythonanywhere.com`, ajoutez
+> ⚠️ **Compte européen ?** Si vous vous êtes inscrit sur `eu.pythonanywhere.com`, ajoutez
 > un 5ᵉ secret **`PA_HOST`** valant `eu.pythonanywhere.com`. Sinon, ne le créez pas : le
 > workflow utilise `www.pythonanywhere.com` par défaut.
 
@@ -407,7 +432,8 @@ le flux vidéo.
 > n'est disponible que dans un **contexte sécurisé** : HTTPS, ou `localhost`. Une page
 > servie en `http://` renvoie `undefined` pour `navigator.mediaDevices`, et **toutes** les
 > bibliothèques AR échouent sans message clair. C'est très précisément le service que vous
-> rend PythonAnywhere.
+> rendent PythonAnywhere **et** l'URL `app.github.dev` de votre codespace — toutes deux
+> en HTTPS.
 
 **💡 Astuce** Générez un QR code de votre URL
 (<https://api.qrserver.com/> ou l'extension de votre navigateur) et collez-le dans votre
@@ -424,7 +450,7 @@ soutenance.
 
 | Critère | Acquis si… |
 |---|---|
-| Dépôt personnel | le fork existe et est cloné en local |
+| Dépôt personnel | le fork existe et un codespace est ouvert dessus |
 | Hébergement | l'URL PythonAnywhere répond en HTTPS |
 | Déploiement continu | un `git push` met le site à jour sans intervention |
 | Secrets | aucun identifiant n'apparaît en clair dans le dépôt |
@@ -435,7 +461,7 @@ soutenance.
 # 🧩 Atelier 1 — Comprendre l'AR
 
 **Rattachement** : Section 1 « Introduction à la RA et RV » ·
-**Modalité** : binômes, recherche guidée puis restitution orale courte.
+**Modalité** : travail individuel, recherche guidée puis restitution orale courte.
 
 ## Objectifs
 
@@ -461,16 +487,16 @@ soutenance.
 5. **Cas d'usage** : un exemple documenté par catégorie (marketing, gaming, formation), avec
    bénéfice métier et limite technique associée.
 
-> 🔬 **Séquence démonstration (animée par l'enseignant·e) — le SLAM.**
+> 🔬 **Séquence démonstration (animée par l'enseignant) — le SLAM.**
 > Le SLAM n'étant pas praticable en WebAR universel (cf. § 4.3), il est montré ici :
 > détection de plans en direct via `<model-viewer>` sur un appareil compatible (mesurez la
 > dérive quand on masque la caméra !), puis lecture commentée de l'API `hit-test` de WebXR
-> et du *raycast* d'AR Foundation. **Objectif** : que les étudiant·e·s sachent *ce qu'ils ne
+> et du *raycast* d'AR Foundation. **Objectif** : que les étudiants sachent *ce qu'ils ne
 > font pas* en ateliers 2–3, et pourquoi.
 
 ## Travail demandé
 
-Chaque binôme produit une **fiche de synthèse (2 pages)** et un **mini-exposé (5 min)**
+Chaque étudiant produit une **fiche de synthèse (2 pages)** et un **mini-exposé (5 min)**
 couvrant :
 
 - un tableau comparatif **RA / RV / RM** ;
@@ -611,14 +637,14 @@ chargement du modèle, et mesurez le gain perçu sur le réseau de la salle.
 
 Un modèle 3D **reste posé et stable** sur une surface réelle quand on déplace le téléphone,
 et il est à **l'échelle plausible**. La page fonctionne sur **au moins un appareil Android
-et un appareil iOS** (mettez-vous en binôme si vous n'avez pas les deux).
+et un appareil iOS** (empruntez un appareil à un camarade si vous n'avez pas les deux).
 
 ---
 
 # 🧩 Atelier 3 — Suivi par marqueur et par image
 
 **Rattachement** : Section 2 « Développement d'applications » ·
-**Modalité** : TD encadré, binômes, jalons avec points de contrôle par l'enseignant·e.
+**Modalité** : TD encadré individuel, jalons avec points de contrôle par l'enseignant.
 
 ## Principe
 
@@ -771,7 +797,7 @@ réserver une route d'administration au niveau `admin`.
 3. **Jalon J3** : suivi d'image MindAR, compilation de la cible.
 4. **Jalon J4** : API et UI, puis gestion des cas d'erreur.
 5. **Jalon J5** : exercices 3.1 et 3.2.
-6. **Clôture** : bonus J6, nettoyage du dépôt, démo croisée entre binômes.
+6. **Clôture** : bonus J6, nettoyage du dépôt, démonstration individuelle à l'enseignant.
 
 ## Livrable
 
@@ -792,24 +818,28 @@ réserver une route d'administration au niveau `admin`.
 
 ---
 
-# 🧩 Atelier 4 — Projet : application AR (MVP en groupe)
+# 🧩 Atelier 4 — Projet : application AR (MVP individuel)
 
 **Rattachement** : Section 3 « Cas pratiques : prototypage » ·
-**Modalité** : projet en groupe (3–4 personnes), **logique MVP**, clôturé par une
-soutenance-démo.
+**Modalité** : projet individuel, **logique MVP**, clôturé par une soutenance-démo.
 
 ## Énoncé du sujet
 
 > **Concevoir, développer et livrer le MVP d'une application de réalité augmentée**
-> répondant à un besoin réel dans l'un des domaines du syllabus (**marketing, gaming,
-> formation, éducation**). Le groupe applique une démarche projet : cadrage du besoin,
-> périmètre MVP, développement itératif, démonstration.
+> répondant à un besoin réel dans l'un des domaines suivants (**marketing, gaming,
+> formation, éducation**). Vous appliquez une démarche projet complète : cadrage du
+> besoin, périmètre MVP, développement itératif, démonstration.
 >
 > **Contrainte de livraison : l'application doit être en ligne**, accessible par URL
-> publique et démontrable depuis le téléphone d'un membre du jury.
+> publique et démontrable depuis le téléphone de l'enseignant.
 
-Conformément au syllabus, le projet peut être **décliné en RV** (WebXR sur casque) si le
-groupe le justifie — mais la contrainte de démonstration reste la même.
+Le projet peut être **décliné en RV** (WebXR sur casque) si vous le justifiez — mais la
+contrainte de démonstration reste la même.
+
+> ⚠️ **Le périmètre est calibré pour une personne seule.** Une seule *user story*, un seul
+> mode de suivi (marqueur **ou** image, pas les deux), deux ou trois modèles 3D au
+> maximum. Un MVP modeste et qui fonctionne vaut bien mieux qu'une ambition inachevée :
+> c'est exactement ce que la grille d'évaluation récompense.
 
 ## Démarche imposée (approche MVP)
 
@@ -836,14 +866,14 @@ Tous ces sujets sont réalisables avec la pile du module (marqueur ou suivi d'im
 | Sciences | **Explorateur 3D** (organe, molécule, système solaire) | Modèle manipulable + annotations interactives | `<model-viewer>` + API |
 | Marketing | **Carte de visite augmentée** | Suivi d'image sur la carte → avatar + liens | MindAR |
 
-> Les groupes peuvent proposer leur **propre sujet**, sous validation de l'enseignant·e
-> (faisabilité dans le cadre de l'atelier + périmètre MVP réaliste).
+> Vous pouvez proposer votre **propre sujet**, sous validation de l'enseignant
+> (faisabilité pour une personne seule + périmètre MVP réaliste).
 
 ## Livrables attendus
 
 - **Dépôt Git** du projet (code, `README`, instructions de déploiement).
 - **Application en ligne et fonctionnelle**, avec son **QR code** dans le `README`.
-- **Dossier projet court (3–5 pages)** : besoin, périmètre MVP, architecture, choix
+- **Dossier projet court (2–3 pages)** : besoin, périmètre MVP, architecture, choix
   techniques, **limites et perspectives**.
 - **Soutenance (10 min + démo live)**.
 
@@ -872,7 +902,7 @@ Tous ces sujets sont réalisables avec la pile du module (marqueur ou suivi d'im
 
 ## Lire ses logs — le premier réflexe
 
-Lors de vos développements, vous serez peut-être confronté·e à des erreurs système : erreurs
+Lors de vos développements, vous serez peut-être confronté à des erreurs système : erreurs
 de syntaxe, mauvaises déclarations de fonctions, appels à des modules inexistants, secrets
 mal renseignés, etc. Les causes d'erreurs sont quasi illimitées. **Vous devez donc vous
 tourner vers les logs de votre système pour comprendre d'où vient le problème.**
@@ -908,23 +938,36 @@ branchez le téléphone et ouvrez `chrome://inspect` sur votre poste. Sur iOS, a
 | **La cible MindAR décroche sans arrêt** | image source pauvre en détails ou répétitive | changez d'image : contrastée, détaillée, non symétrique |
 | **Le site répondait, puis plus rien (après quelques semaines)** | web app gratuite désactivée pour inactivité | reconnectez-vous à PythonAnywhere et cliquez sur **Run until 3 months from today** |
 
-## Tester en local avant de pousser
+## Tester dans son codespace avant de pousser
+
+Inutile d'attendre un déploiement de 20 secondes pour voir une faute de frappe. Dans le
+terminal du codespace :
 
 ```bash
-python -m venv .venv && source .venv/bin/activate    # Windows : .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements.txt   # déjà fait au premier démarrage
 python flask_app.py
 ```
 
-Puis ouvrez <http://localhost:5000>. **`localhost` est considéré comme un contexte
-sécurisé** : la caméra fonctionne donc aussi en local sur votre poste. En revanche, pour
-tester depuis votre **téléphone**, il faut passer par l'URL HTTPS de PythonAnywhere.
+Codespaces détecte le port 5000 et propose de l'ouvrir : cliquez sur **Open in Browser**,
+ou allez dans l'onglet **PORTS** du terminal. L'URL a la forme
+`https://<votre-codespace>-5000.app.github.dev`.
+
+**Bonne nouvelle : cette URL est en HTTPS**, donc c'est un contexte sécurisé — la caméra
+fonctionne, et vous pouvez tester vos scènes AR sans passer par PythonAnywhere.
+
+> 🔑 **Pour tester depuis votre téléphone**, il faut rendre le port accessible : onglet
+> **PORTS** → clic droit sur le port 5000 → **Port Visibility** → **Public**. Sans cela,
+> l'URL exige une authentification GitHub et votre téléphone n'affichera qu'une page de
+> connexion. Repassez le port en **Private** quand vous avez fini.
+
+Arrêtez le serveur avec `Ctrl+C`. **PythonAnywhere reste le livrable** : c'est l'URL
+stable que vous présenterez, et elle ne dépend pas d'un codespace allumé.
 
 ---
 
 # 📎 Annexe A — Aller plus loin : Unity, AR Foundation et WebXR
 
-Le module écarte volontairement ces technologies (cf. § 4.3), mais tout·e expert·e en
+Le module écarte volontairement ces technologies (cf. § 4.3), mais tout expert en
 développement logiciel doit savoir qu'elles existent et ce qu'elles apportent.
 
 ## A.1 — WebXR : le SLAM dans le navigateur

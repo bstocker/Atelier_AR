@@ -1,0 +1,40 @@
+{
+  "name": "Atelier AR — Flask & WebAR",
+
+  // Image officielle Python maintenue par Microsoft : Python, pip et git y sont
+  // déjà installés. Rien à installer sur la machine de l'étudiant.
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+
+  // Installe les dépendances du projet à la création du codespace, pour que
+  // `python flask_app.py` fonctionne dès la première minute.
+  "postCreateCommand": "pip install --user -r requirements.txt",
+
+  // Message affiché à chaque ouverture du terminal.
+  "postAttachCommand": {
+    "aide": "echo '\\n🎯 Atelier AR — lancez le serveur avec :  python flask_app.py\\n   puis onglet PORTS -> port 5000 -> Open in Browser\\n   pour tester depuis un telephone : PORTS -> clic droit -> Port Visibility -> Public\\n'"
+  },
+
+  // Le port de développement de Flask, ouvert automatiquement.
+  "forwardPorts": [5000],
+  "portsAttributes": {
+    "5000": {
+      "label": "Flask — Atelier AR",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "samuelcolvin.jinjahtml",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "files.eol": "\n",
+        "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+        "files.associations": { "*.html": "jinja-html" }
+      }
+    }
+  }
+}
