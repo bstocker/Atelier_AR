@@ -1,0 +1,38 @@
+{
+  "_lisez_moi": [
+    "Catalogue des modèles 3D du projet. C'est la couche « données » de l'application :",
+    "Flask le lit, l'expose via /api/modeles, et les gabarits s'en servent.",
+    "",
+    "ATELIER 2 — ajoutez une entrée par modèle que vous déposez dans static/models/.",
+    "Le JSON n'accepte pas de commentaires : cette clé « _lisez_moi » en tient lieu.",
+    "",
+    "Champs attendus :",
+    "  slug        identifiant en minuscules sans espace, utilisé dans les URL",
+    "  nom         libellé affiché",
+    "  description texte de la fiche et du panneau d'info AR (jalon J4)",
+    "  glb         nom du fichier dans static/models/ (Android + navigateur)",
+    "  usdz        nom du fichier USDZ dans static/models/ (INDISPENSABLE sur iPhone)",
+    "  poster      image de chargement dans static/models/ (optionnel)",
+    "  cible_mind  fichier .mind compilé dans static/targets/ (atelier 3b)",
+    "  cible_index index de la cible dans le fichier .mind (0 pour la première)",
+    "  echelle     facteur d'échelle appliqué dans les scènes AR (unités glTF = mètres)",
+    "  auteur      crédit de l'auteur du modèle",
+    "  licence     licence du modèle (à renseigner : c'est une obligation légale)"
+  ],
+
+  "modeles": [
+    {
+      "slug": "exemple",
+      "nom": "Modèle d'exemple",
+      "description": "Entrée de démonstration. Remplacez-la par votre premier modèle à l'atelier 2 : déposez un fichier .glb dans static/models/, puis renseignez les champs ci-dessous. La page d'accueil signale en orange les fichiers déclarés mais absents.",
+      "glb": "exemple.glb",
+      "usdz": "exemple.usdz",
+      "poster": null,
+      "cible_mind": null,
+      "cible_index": 0,
+      "echelle": 0.2,
+      "auteur": "à renseigner",
+      "licence": "à renseigner"
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{# =========================================================================
+   🚧 ATELIER 3, jalons J1–J2 — Suivi par marqueur avec A-Frame + AR.js
+   =========================================================================
+
+   OBJECTIF
+   J1 : afficher un cube sur le marqueur Hiro imprimé.
+   J2 : remplacer le cube par un modèle glTF du catalogue, bien orienté et à
+        la bonne échelle.
+
+   ⚠️ CE GABARIT N'HÉRITE PAS DE base.html : A-Frame prend le contrôle du
+   <body> et de la mise en page. Ajouter l'en-tête du site ici décalerait le
+   canvas et le suivi serait faux.
+
+   AVANT DE COMMENCER — imprimez le marqueur Hiro sur une feuille A4 :
+   https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png
+   Conservez la bordure blanche autour du motif : c'est elle qui permet la
+   détection.
+
+   VARIABLES DISPONIBLES
+     modele  l'objet du catalogue, ou None si l'URL n'a pas de ?modele=<slug>
+   ========================================================================= #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Marqueur AR — {{ modele.nom if modele else 'Atelier 3' }}</title>
+
+  {# TODO 3.1 — Charger A-Frame PUIS AR.js. L'ordre est impératif : AR.js
+     s'enregistre comme composant A-Frame et échoue si A-Frame n'est pas
+     déjà chargé.
+
+     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+     💡 Ces scripts sont chargés par le navigateur de l'étudiant·e, pas par le
+     serveur : la liste blanche de PythonAnywhere ne s'applique donc pas. #}
+
+  <style>
+    body { margin: 0; overflow: hidden; font-family: system-ui, sans-serif; }
+    .surcouche {
+      position: fixed; z-index: 10; left: 0; right: 0; bottom: 0;
+      padding: 0.8rem 1rem; background: rgba(0, 0, 0, 0.72); color: #fff;
+      font-size: 0.9rem; line-height: 1.4;
+    }
+    .surcouche a { color: #8cc6ff; }
+    .retour {
+      position: fixed; z-index: 10; top: 0.6rem; left: 0.6rem;
+      padding: 0.4rem 0.7rem; border-radius: 999px;
+      background: rgba(0, 0, 0, 0.72); color: #fff; text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="retour" href="{{ url_for('accueil') }}">← Catalogue</a>
+
+  <div class="surcouche" id="surcouche">
+    <strong>🚧 Jalons J1–J2 à compléter.</strong>
+    Ouvrez <code>templates/marqueur.html</code> et suivez les
+    <code>TODO 3.1</code> à <code>TODO 3.3</code>.
+    {% if not modele %}
+      <br>Aucun modèle sélectionné — ajoutez <code>?modele=&lt;slug&gt;</code>
+      à l'URL pour le jalon J2.
+    {% endif %}
+  </div>
+
+  {# TODO 3.2 — Construire la scène.
+     Remplacez ce commentaire par :
+
+     <a-scene embedded
+              arjs="sourceType: webcam; debugUIEnabled: false;"
+              vr-mode-ui="enabled: false"
+              renderer="antialias: true; alpha: true">
+
+       <a-marker preset="hiro">
+         <!-- ===== JALON J1 =====
+              Tout ce qui est enfant de <a-marker> vit dans le REPÈRE DU
+              MARQUEUR, et n'existe que lorsque le marqueur est vu.
+              position="0 0.5 0" = 50 cm au-dessus du centre du marqueur.
+              Repère A-Frame : X droite, Y haut, Z vers vous. Unité = le mètre.
+         -->
+         <a-box position="0 0.5 0" material="color: #4A90D9;"></a-box>
+
+         <!-- ===== JALON J2 =====
+              Remplacez le cube par le modèle du catalogue :
+              <a-gltf-model
+                  src="#modele"
+                  position="0 0 0"
+                  rotation="0 0 0"
+                  scale="..."></a-gltf-model>
+         -->
+       </a-marker>
+
+       <!-- La caméra doit être HORS du marqueur, sinon elle serait
+            elle-même positionnée dans son repère. -->
+       <a-entity camera></a-entity>
+     </a-scene>
+  #}
+
+  {# TODO 3.3 — Jalon J2 : déclarer le modèle dans <a-assets>.
+     A-Frame précharge les fichiers déclarés dans <a-assets> et n'affiche la
+     scène qu'ensuite — indispensable pour un .glb de plusieurs mégaoctets.
+
+     À placer au début de <a-scene> :
+
+     <a-assets>
+       {% if modele and modele.glb %}
+       <a-asset-item id="modele"
+                     src="{{ url_for('static', filename='models/' ~ modele.glb) }}"></a-asset-item>
+       {% endif %}
+     </a-assets>
+
+     ⚠️ ÉCHELLE — le piège du jalon J2 : un marqueur Hiro imprimé sur A4 mesure
+     environ 10 cm, soit 0.1 en unités A-Frame. Un modèle d'une arête de 1
+     (= 1 mètre) paraîtra donc dix fois plus grand que la feuille.
+     {% if modele %}Le catalogue suggère scale="{{ modele.echelle }} {{ modele.echelle }} {{ modele.echelle }}".{% endif %}
+  #}
+
+  <script>
+    // TODO 3.4 — Robustesse (attendu « gestion des cas d'erreur »).
+    //
+    // a) Prévenir si la caméra est refusée : AR.js émet l'événement
+    //    "arjs-video-loaded" sur la scène en cas de succès. Si rien n'arrive
+    //    au bout de quelques secondes, affichez un message et renvoyez vers
+    //    /camera pour le diagnostic.
+    //
+    // b) Donner un retour visuel sur la détection : les événements
+    //    "markerFound" et "markerLost" sont émis par <a-marker>.
+    //
+    //    const marqueur = document.querySelector("a-marker");
+    //    marqueur?.addEventListener("markerFound", () => { ... });
+    //    marqueur?.addEventListener("markerLost",  () => { ... });
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{# Page d'accueil — FOURNIE ET FONCTIONNELLE.
+   Elle sert de test de bout en bout à l'atelier 0 : si vous la voyez en ligne,
+   votre chaîne de déploiement fonctionne. #}
+{% extends "base.html" %}
+
+{% block titre %}Catalogue — Projet Réalité Augmentée{% endblock %}
+
+{% block contenu %}
+  <h1>Catalogue de modèles 3D</h1>
+
+  <p class="chapeau">
+    Cette page liste les modèles déclarés dans <code>data/catalogue.json</code>.
+    Ouvrez-la <strong>depuis votre smartphone</strong> pour tester les scènes de
+    réalité augmentée.
+  </p>
+
+  {% if not modeles %}
+    <div class="encart encart--info">
+      <h2>Catalogue vide</h2>
+      <p>
+        Aucun modèle n'est déclaré. C'est normal si vous démarrez : rendez-vous à
+        l'<strong>atelier 2</strong> pour déposer votre premier fichier
+        <code>.glb</code> dans <code>static/models/</code> et l'ajouter à
+        <code>data/catalogue.json</code>.
+      </p>
+      <p class="petit">
+        Si vous <em>aviez</em> déclaré des modèles, le fichier JSON est peut-être
+        invalide (une virgule en trop ?). Consultez l'<em>error log</em> de
+        PythonAnywhere.
+      </p>
+    </div>
+  {% else %}
+    <ul class="grille">
+      {% for modele in modeles %}
+        <li class="carte">
+          <h2>{{ modele.nom }}</h2>
+          <p class="description">{{ modele.description }}</p>
+
+          {# Diagnostic : on distingue « déclaré dans le catalogue » de
+             « fichier réellement présent sur le serveur ». C'est la source de
+             confusion n°1 de l'atelier 2. #}
+          <ul class="etats">
+            <li class="{{ 'ok' if modele.glb_present else 'manquant' }}">
+              {{ '✅' if modele.glb_present else '⚠️' }} glTF
+              <code>{{ modele.glb or '—' }}</code>
+              {%- if not modele.glb_present %} introuvable dans
+              <code>static/models/</code>{% endif %}
+            </li>
+            <li class="{{ 'ok' if modele.usdz_present else 'manquant' }}">
+              {{ '✅' if modele.usdz_present else '⚠️' }} USDZ
+              <code>{{ modele.usdz or '—' }}</code>
+              {%- if not modele.usdz_present %} — le bouton AR
+              n'apparaîtra pas sur iPhone{% endif %}
+            </li>
+            {% if modele.cible_mind %}
+              <li class="{{ 'ok' if modele.cible_presente else 'manquant' }}">
+                {{ '✅' if modele.cible_presente else '⚠️' }} Cible MindAR
+                <code>{{ modele.cible_mind }}</code>
+              </li>
+            {% endif %}
+          </ul>
+
+          <div class="actions">
+            <a class="bouton" href="{{ url_for('viewer', slug=modele.slug) }}">
+              Voir en 3D / AR
+            </a>
+            <a class="bouton bouton--secondaire"
+               href="{{ url_for('marqueur', modele=modele.slug) }}">
+              Sur marqueur
+            </a>
+            {% if modele.cible_mind %}
+              <a class="bouton bouton--secondaire"
+                 href="{{ url_for('image', slug=modele.slug) }}">
+                Sur image
+              </a>
+            {% endif %}
+            <a class="lien-discret" href="{{ url_for('fiche', slug=modele.slug) }}">
+              Fiche
+            </a>
+          </div>
+
+          <p class="petit credits">
+            {{ modele.auteur or 'auteur non renseigné' }} ·
+            {{ modele.licence or 'licence non renseignée' }}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <section class="encart">
+    <h2>Avant de commencer les ateliers AR</h2>
+    <p>Vérifiez que votre chaîne est opérationnelle (séquence 0.4) :</p>
+    <ol>
+      <li><a href="{{ url_for('sante') }}">/sante</a> doit répondre <code>"https": true</code></li>
+      <li><a href="{{ url_for('test_camera') }}">/camera</a> doit afficher le flux vidéo sur votre téléphone</li>
+    </ol>
+  </section>
+{% endblock %}

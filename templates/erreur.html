@@ -1,0 +1,34 @@
+{# Page d'erreur commune — FOURNIE.
+   Utilisée par les gestionnaires 403 / 404 / 501 de flask_app.py. #}
+{% extends "base.html" %}
+
+{% block titre %}Erreur {{ code }}{% endblock %}
+
+{% block contenu %}
+  <h1>Erreur {{ code }}</h1>
+
+  <div class="encart encart--info">
+    <p>{{ message }}</p>
+  </div>
+
+  {% if code == 501 %}
+    <p>
+      Cette fonctionnalité fait partie des <strong>exercices de l'atelier 3</strong>.
+      Ouvrez <code>flask_app.py</code> et cherchez les commentaires
+      <code>TODO ATELIER 3</code>.
+    </p>
+  {% elif code == 403 %}
+    <p>
+      Vos identifiants sont valides mais votre rôle ne suffit pas.
+      Voir l'<strong>exercice 3.2</strong> : hiérarchie des rôles
+      <code>user</code> / <code>admin</code>.
+    </p>
+  {% elif code == 404 %}
+    <p>
+      Vérifiez le <code>slug</code> dans l'URL et sa présence dans
+      <code>data/catalogue.json</code>.
+    </p>
+  {% endif %}
+
+  <p><a class="bouton" href="{{ url_for('accueil') }}">Retour au catalogue</a></p>
+{% endblock %}

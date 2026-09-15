@@ -1,0 +1,22 @@
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Éditeurs et systèmes
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets — ne JAMAIS versionner (cf. séquence 0.3)
+.env
+*.local
+
+# Sorties temporaires
+*.log

@@ -1,0 +1,116 @@
+{# Page de diagnostic caméra — FOURNIE ET FONCTIONNELLE.
+   Séquence 0.4, vérification n°4. C'est le test le plus important de l'atelier 0 :
+   si cette page échoue, AUCUNE bibliothèque AR ne fonctionnera. #}
+{% extends "base.html" %}
+
+{% block titre %}Test caméra — Projet Réalité Augmentée{% endblock %}
+
+{% block contenu %}
+  <h1>Test d'accès à la caméra</h1>
+
+  <p class="chapeau">
+    Ouvrez cette page <strong>depuis votre smartphone</strong>, en
+    <code>https://</code>. Le navigateur doit vous demander l'autorisation
+    d'utiliser la caméra.
+  </p>
+
+  <div id="diagnostic" class="encart"></div>
+
+  <video id="flux" playsinline muted autoplay class="flux-video"></video>
+
+  <p>
+    <button id="demarrer" class="bouton">Démarrer la caméra</button>
+    <button id="basculer" class="bouton bouton--secondaire" hidden>
+      Caméra avant / arrière
+    </button>
+  </p>
+
+  <section class="encart">
+    <h2>Pourquoi ce test ?</h2>
+    <p>
+      L'API <code>getUserMedia()</code> n'est disponible que dans un
+      <strong>contexte sécurisé</strong> : <code>https://</code> ou
+      <code>localhost</code>. En <code>http://</code>,
+      <code>navigator.mediaDevices</code> vaut <code>undefined</code> et toutes
+      les bibliothèques AR échouent — souvent sans message d'erreur explicite.
+    </p>
+    <p>
+      C'est précisément le service que rend PythonAnywhere : un certificat
+      HTTPS valide sur <code>*.pythonanywhere.com</code>, sans configuration.
+    </p>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const diagnostic = document.getElementById("diagnostic");
+  const video      = document.getElementById("flux");
+  const btnDemarrer = document.getElementById("demarrer");
+  const btnBasculer = document.getElementById("basculer");
+
+  let cameraArriere = true;
+  let fluxActuel = null;
+
+  function ligne(etat, texte) {
+    // etat : "ok" | "manquant" | "info"
+    const symbole = { ok: "✅", manquant: "❌", info: "ℹ️" }[etat];
+    const p = document.createElement("p");
+    p.className = "ligne-diagnostic " + etat;
+    p.textContent = `${symbole} ${texte}`;
+    diagnostic.appendChild(p);
+  }
+
+  // --- 1. Le contexte est-il sécurisé ? ------------------------------------
+  if (window.isSecureContext) {
+    ligne("ok", `Contexte sécurisé (${location.protocol}) — la caméra est autorisée à demander l'accès.`);
+  } else {
+    ligne("manquant", `Contexte NON sécurisé (${location.protocol}). Rechargez la page en https://`);
+  }
+
+  // --- 2. L'API est-elle exposée ? -----------------------------------------
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    ligne("ok", "API getUserMedia() disponible.");
+  } else {
+    ligne("manquant", "API getUserMedia() indisponible : contexte non sécurisé, ou navigateur trop ancien.");
+    btnDemarrer.disabled = true;
+  }
+
+  // --- 3. Sommes-nous sur un appareil tactile ? ----------------------------
+  const estMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  ligne("info", estMobile
+    ? "Appareil mobile détecté — bonnes conditions de test."
+    : "Vous semblez être sur un ordinateur. Pensez à refaire ce test depuis un smartphone.");
+
+  // --- 4. Ouverture effective du flux -------------------------------------
+  async function demarrer() {
+    if (fluxActuel) {
+      fluxActuel.getTracks().forEach((piste) => piste.stop());
+    }
+    try {
+      fluxActuel = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: cameraArriere ? "environment" : "user" },
+        audio: false,
+      });
+      video.srcObject = fluxActuel;
+      const piste = fluxActuel.getVideoTracks()[0];
+      const { width, height } = piste.getSettings();
+      ligne("ok", `Flux ouvert : « ${piste.label || "caméra"} » en ${width}×${height}.`);
+      btnBasculer.hidden = false;
+    } catch (erreur) {
+      // NotAllowedError  : l'utilisateur a refusé, ou le site est bloqué
+      // NotFoundError    : aucune caméra
+      // NotReadableError : caméra déjà utilisée par une autre application
+      ligne("manquant", `Échec (${erreur.name}) : ${erreur.message}`);
+      if (erreur.name === "NotAllowedError") {
+        ligne("info", "Réinitialisez l'autorisation du site dans les réglages du navigateur, puis rechargez.");
+      }
+    }
+  }
+
+  btnDemarrer.addEventListener("click", demarrer);
+  btnBasculer.addEventListener("click", () => {
+    cameraArriere = !cameraArriere;
+    demarrer();
+  });
+</script>
+{% endblock %}

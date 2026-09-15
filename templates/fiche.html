@@ -1,0 +1,52 @@
+{# =========================================================================
+   🚧 ATELIER 3 — Fiche détaillée d'un modèle (jalon J5, exercices 3.1 / 3.2)
+   =========================================================================
+
+   OBJECTIF
+   Afficher toutes les métadonnées du modèle, et servir de cible à la route
+   protégée /fiche_nom/ de l'exercice 3.2.
+
+   VARIABLES DISPONIBLES : l'objet `modele` complet (voir data/catalogue.json).
+   ========================================================================= #}
+{% extends "base.html" %}
+
+{% block titre %}Fiche — {{ modele.nom }}{% endblock %}
+
+{% block contenu %}
+  <h1>{{ modele.nom }}</h1>
+
+  <div class="encart encart--todo">
+    <h2>🚧 Gabarit à compléter — atelier 3, jalon J5</h2>
+    <ol>
+      <li>
+        <strong>TODO 3.10a</strong> — présentez proprement toutes les
+        métadonnées du modèle (un tableau conviendra).
+      </li>
+      <li>
+        <strong>TODO 3.10b</strong> — affichez l'<strong>auteur</strong> et la
+        <strong>licence</strong> de façon visible. Créditer l'auteur d'un modèle
+        3D n'est pas une politesse : c'est une obligation de la plupart des
+        licences (CC-BY, etc.).
+      </li>
+      <li>
+        <strong>TODO 3.10c</strong> — ajoutez les liens vers les trois scènes AR
+        du modèle (<code>viewer</code>, <code>marqueur</code>,
+        <code>image</code>), en n'affichant celui de la scène « image » que si
+        <code>modele.cible_mind</code> est renseigné.
+      </li>
+    </ol>
+  </div>
+
+  {# Amorce volontairement minimale, à étoffer. #}
+  <dl class="fiche">
+    <dt>Identifiant</dt>
+    <dd><code>{{ modele.slug }}</code></dd>
+
+    <dt>Description</dt>
+    <dd>{{ modele.description }}</dd>
+
+    {# TODO 3.10a / 3.10b — poursuivez : glb, usdz, échelle, auteur, licence… #}
+  </dl>
+
+  <p><a class="lien-discret" href="{{ url_for('accueil') }}">← Retour au catalogue</a></p>
+{% endblock %}

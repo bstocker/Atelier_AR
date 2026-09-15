@@ -1,0 +1,44 @@
+{# ---------------------------------------------------------------------------
+   Gabarit commun aux pages « classiques » du projet (accueil, fiche, erreur,
+   test caméra).
+
+   ⚠️ Les scènes AR plein écran (marqueur.html, image.html) n'héritent PAS de ce
+   gabarit : A-Frame prend le contrôle du <body> et de la mise en page, et les
+   styles ci-dessous entreraient en conflit avec son canvas.
+   --------------------------------------------------------------------------- #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  {# width=device-width est indispensable : sans lui, une page AR s'affiche
+     zoomée sur mobile et les boutons deviennent inatteignables. #}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titre %}Projet Réalité Augmentée{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block tete %}{% endblock %}
+</head>
+<body>
+  <header class="entete">
+    <a class="marque" href="{{ url_for('accueil') }}">🎯 Atelier AR</a>
+    <nav>
+      <a href="{{ url_for('accueil') }}">Catalogue</a>
+      <a href="{{ url_for('marqueur') }}">Marqueur</a>
+      <a href="{{ url_for('test_camera') }}">Caméra</a>
+      <a href="{{ url_for('sante') }}">Santé</a>
+    </nav>
+  </header>
+
+  <main class="contenu">
+    {% block contenu %}{% endblock %}
+  </main>
+
+  <footer class="pied">
+    <p>
+      Module Réalité Augmentée · WebAR, Flask &amp; PythonAnywhere ·
+      <a href="https://github.com/">code source</a>
+    </p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

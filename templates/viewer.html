@@ -1,0 +1,116 @@
+{# =========================================================================
+   🚧 ATELIER 2 — « Hello World » AR avec <model-viewer>
+   =========================================================================
+
+   OBJECTIF
+   Afficher le modèle 3D dans la page, puis permettre de le poser à l'échelle
+   réelle sur une surface de la salle via le bouton AR du téléphone.
+
+   CE QUI VOUS EST DONNÉ
+   La route Flask, la variable `modele` (issue de data/catalogue.json) et la
+   mise en page. Il vous reste à intégrer le composant web.
+
+   VARIABLES DISPONIBLES DANS CE GABARIT
+     modele.slug / .nom / .description / .echelle
+     modele.glb          nom du fichier dans static/models/
+     modele.usdz         nom du fichier USDZ dans static/models/
+     modele.poster       image de chargement (peut être null)
+     modele.glb_present  booléen : le fichier existe-t-il vraiment ?
+
+   RAPPEL POUR CONSTRUIRE UNE URL DE FICHIER STATIQUE :
+     {{ '{{' }} url_for('static', filename='models/' ~ modele.glb) {{ '}}' }}
+   ========================================================================= #}
+{% extends "base.html" %}
+
+{% block titre %}{{ modele.nom }} — Voir en AR{% endblock %}
+
+{% block tete %}
+  {# TODO 2.1 — Charger le composant <model-viewer> depuis un CDN.
+     C'est un module ES : l'attribut type="module" est obligatoire.
+
+     <script type="module"
+             src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js">
+     </script>
+
+     ⚠️ Vérifiez la version courante sur https://modelviewer.dev/ #}
+{% endblock %}
+
+{% block contenu %}
+  <h1>{{ modele.nom }}</h1>
+  <p class="chapeau">{{ modele.description }}</p>
+
+  {% if not modele.glb_present %}
+    <div class="encart encart--alerte">
+      <p>
+        ⚠️ Le fichier <code>{{ modele.glb }}</code> est déclaré dans le catalogue
+        mais absent de <code>static/models/</code>. Déposez-le, puis
+        <code>git push</code>.
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="encart encart--todo">
+    <h2>🚧 Gabarit à compléter — atelier 2</h2>
+    <p>
+      Cette page est volontairement incomplète. Suivez les
+      <code>TODO</code> présents dans
+      <code>templates/viewer.html</code> :
+    </p>
+    <ol>
+      <li><strong>TODO 2.1</strong> — charger le script <code>&lt;model-viewer&gt;</code> (bloc <code>tete</code>)</li>
+      <li><strong>TODO 2.2</strong> — déclarer l'élément et ses attributs, ci-dessous</li>
+      <li><strong>TODO 2.3</strong> — gérer le cas « AR indisponible » (exercice 2.2)</li>
+    </ol>
+    <p class="petit">
+      Supprimez cet encart quand la scène fonctionne.
+    </p>
+  </div>
+
+  {# TODO 2.2 — Déclarer le composant.
+     Remplacez ce commentaire par l'élément <model-viewer>. Attributs clés :
+
+       src            le .glb  → url_for('static', filename='models/' ~ modele.glb)
+       ios-src        le .usdz → INDISPENSABLE, sinon aucun bouton AR sur iPhone
+       alt            description textuelle (accessibilité : obligatoire)
+       ar             active le mode AR
+       ar-modes       "scene-viewer quick-look webxr"
+       ar-scale       "auto" (l'OS ajuste) ou "fixed" (taille réelle imposée)
+       camera-controls  rotation au doigt / à la souris dans la page
+       shadow-intensity "1" — une ombre portée améliore beaucoup le réalisme
+       poster         image affichée pendant le chargement (exercice 2.3)
+
+     Placez un <button slot="ar-button"> à l'intérieur pour personnaliser le
+     bouton AR.
+
+     💡 Générateur d'attributs : https://modelviewer.dev/editor/
+  #}
+
+  <div id="zone-modele" class="zone-modele">
+    <p class="petit">(la scène 3D apparaîtra ici)</p>
+  </div>
+
+  <p>
+    <a class="lien-discret" href="{{ url_for('fiche', slug=modele.slug) }}">
+      Fiche technique du modèle
+    </a>
+  </p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // TODO 2.3 — Exercice 2.2 : diagnostic « AR indisponible ».
+  //
+  // Sur un ordinateur, ou sur un appareil non compatible, le bouton AR ne sert
+  // à rien. Prévenez l'utilisateur au lieu de le laisser cliquer dans le vide.
+  //
+  // Piste : <model-viewer> émet un événement `ar-status` dont
+  // event.detail.status vaut "not-presenting", "session-started",
+  // "object-placed" ou "failed".
+  //
+  //   const viewer = document.querySelector("model-viewer");
+  //   if (viewer && !viewer.canActivateAR) {
+  //       // afficher un message explicite
+  //   }
+  //   viewer?.addEventListener("ar-status", (event) => { ... });
+</script>
+{% endblock %}

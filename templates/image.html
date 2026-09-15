@@ -1,0 +1,155 @@
+{# =========================================================================
+   🚧 ATELIER 3, jalons J3–J4 — Suivi d'image avec MindAR
+   =========================================================================
+
+   OBJECTIF
+   J3 : une image imprimée de votre choix (affiche, couverture, planche de
+        cours) déclenche l'apparition du modèle 3D.
+   J4 : la scène interroge l'API Flask et affiche un panneau d'information.
+
+   ⚠️ CE GABARIT N'HÉRITE PAS DE base.html (scène plein écran, cf. marqueur.html).
+
+   AVANT DE COMMENCER — compilez votre cible :
+     1. choisissez une image RICHE EN DÉTAILS NON RÉPÉTITIFS et CONTRASTÉS.
+        Une image uniforme, floue, symétrique ou très géométrique ne se suit
+        pas — c'est la cause n°1 des décrochages ;
+     2. compilez-la sur https://hiukim.github.io/mind-ar-js-doc/tools/compile ;
+     3. déposez le fichier .mind obtenu dans static/targets/ ;
+     4. renseignez `cible_mind` dans data/catalogue.json ;
+     5. imprimez l'image, c'est elle que vous viserez.
+
+   VARIABLES DISPONIBLES
+     modele.glb / .usdz / .echelle / .description
+     modele.cible_mind      nom du fichier .mind dans static/targets/
+     modele.cible_index     index de la cible dans ce fichier (0 = la première)
+     modele.cible_presente  booléen : le fichier .mind existe-t-il ?
+   ========================================================================= #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Image AR — {{ modele.nom }}</title>
+
+  {# TODO 3.6 — Charger A-Frame PUIS la version « image + aframe » de MindAR.
+     L'ordre est impératif.
+
+     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+     ⚠️ Ne confondez pas les distributions de MindAR :
+        mindar-image-aframe.prod.js  → suivi d'image avec A-Frame  ✅ ici
+        mindar-image-three.prod.js   → suivi d'image avec three.js
+        mindar-face-aframe.prod.js   → suivi de VISAGE (jalon J6 bonus) #}
+
+  <style>
+    body { margin: 0; overflow: hidden; font-family: system-ui, sans-serif; }
+    .retour {
+      position: fixed; z-index: 10; top: 0.6rem; left: 0.6rem;
+      padding: 0.4rem 0.7rem; border-radius: 999px;
+      background: rgba(0, 0, 0, 0.72); color: #fff; text-decoration: none;
+    }
+    /* Panneau d'information du jalon J4. Il est en HTML, PAS en 3D :
+       du texte lisible dans une scène AR est bien plus simple à faire en
+       surcouche DOM qu'avec des entités <a-text>. */
+    .panneau {
+      position: fixed; z-index: 10; left: 0; right: 0; bottom: 0;
+      padding: 0.9rem 1.1rem; background: rgba(0, 0, 0, 0.78); color: #fff;
+      font-size: 0.9rem; line-height: 1.45;
+      transform: translateY(100%); transition: transform 0.25s ease;
+    }
+    .panneau.visible { transform: translateY(0); }
+    .panneau h1 { margin: 0 0 0.3rem; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+
+  <a class="retour" href="{{ url_for('accueil') }}">← Catalogue</a>
+
+  {% if not modele.cible_presente %}
+    <div class="panneau visible">
+      <h1>⚠️ Cible manquante</h1>
+      <p>
+        {% if modele.cible_mind %}
+          Le fichier <code>{{ modele.cible_mind }}</code> est déclaré dans le
+          catalogue mais absent de <code>static/targets/</code>.
+        {% else %}
+          Aucune cible <code>.mind</code> n'est déclarée pour ce modèle.
+        {% endif %}
+        Compilez votre image, déposez le <code>.mind</code>, puis
+        <code>git push</code>.
+      </p>
+    </div>
+  {% else %}
+    <div class="panneau visible" id="panneau">
+      <h1>🚧 Jalons J3–J4 à compléter</h1>
+      <p>
+        Ouvrez <code>templates/image.html</code> et suivez les
+        <code>TODO 3.6</code> à <code>TODO 3.9</code>.
+      </p>
+    </div>
+  {% endif %}
+
+  {# TODO 3.7 — Construire la scène MindAR.
+     Remplacez ce commentaire par :
+
+     <a-scene mindar-image="imageTargetSrc: URL_DU_FICHIER_MIND; autoStart: true; uiScanning: #example-scanning;"
+              embedded
+              color-space="sRGB"
+              renderer="colorManagement: true; physicallyCorrectLights: true;"
+              vr-mode-ui="enabled: false"
+              device-orientation-permission-ui="enabled: false">
+
+       <a-assets>
+         <a-asset-item id="modele" src="URL_DU_FICHIER_GLB"></a-asset-item>
+       </a-assets>
+
+       <!-- look-controls DOIT être désactivé : c'est MindAR qui pilote la
+            caméra à partir de l'image suivie. Sinon la scène part en vrille. -->
+       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+       <!-- targetIndex correspond à l'ordre des images dans le fichier .mind -->
+       <a-entity mindar-image-target="targetIndex: 0">
+         <a-gltf-model src="#modele"
+                       position="0 0 0"
+                       rotation="0 0 0"
+                       scale="0.5 0.5 0.5"
+                       animation-mixer></a-gltf-model>
+       </a-entity>
+     </a-scene>
+
+     Pour les URL, utilisez url_for comme dans index.html :
+       static/targets/ + modele.cible_mind
+       static/models/  + modele.glb
+
+     💡 REPÈRE DE LA CIBLE : le plan de l'image est le plan XY. L'axe Z sort de
+     l'image vers vous. Un modèle « debout » demande donc souvent une rotation
+     de -90° sur X — testez.
+  #}
+
+  <script>
+    // TODO 3.8 — Jalon J4 : consommer l'API Flask.
+    //
+    // La scène AR ne doit PAS connaître les données : elle les demande. C'est
+    // l'attendu d'architecture du niveau 7. Le catalogue peut ainsi changer
+    // côté serveur sans toucher à cette scène.
+    //
+    //   const reponse = await fetch("{{ url_for('api_modele', slug=modele.slug) }}");
+    //   if (!reponse.ok) throw new Error("API indisponible : " + reponse.status);
+    //   const donnees = await reponse.json();
+    //   document.querySelector("#panneau h1").textContent = donnees.nom;
+    //
+    // Traitez le cas d'échec : réseau coupé, 404, JSON invalide.
+
+    // TODO 3.9 — Afficher le panneau seulement quand la cible est vue.
+    //
+    // MindAR émet "targetFound" et "targetLost" sur l'entité
+    // mindar-image-target. Ajoutez/retirez la classe CSS "visible" :
+    //
+    //   const cible   = document.querySelector("[mindar-image-target]");
+    //   const panneau = document.querySelector("#panneau");
+    //   cible?.addEventListener("targetFound", () => panneau.classList.add("visible"));
+    //   cible?.addEventListener("targetLost",  () => panneau.classList.remove("visible"));
+  </script>
+</body>
+</html>

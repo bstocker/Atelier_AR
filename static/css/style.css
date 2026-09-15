@@ -1,0 +1,218 @@
+/* ---------------------------------------------------------------------------
+   Projet Réalité Augmentée — feuille de style des pages « classiques ».
+   FOURNIE : vous n'avez pas besoin de la modifier pour les ateliers, mais rien
+   ne vous en empêche.
+
+   Les scènes AR plein écran (marqueur.html, image.html) portent leurs propres
+   styles, pour éviter tout conflit avec le canvas d'A-Frame.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --fond: #12151b;
+  --fond-carte: #1b2029;
+  --fond-encart: #1f2530;
+  --texte: #e8ecf1;
+  --texte-doux: #9aa5b4;
+  --accent: #4a90d9;
+  --accent-clair: #8cc6ff;
+  --ok: #4caf7d;
+  --alerte: #e8a33d;
+  --bordure: #2c3441;
+  --rayon: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+a { color: var(--accent-clair); }
+
+code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 0.9em;
+}
+
+/* --- Structure ----------------------------------------------------------- */
+
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  border-bottom: 1px solid var(--bordure);
+  background: #0e1116;
+}
+
+.marque {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.entete nav { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+.entete nav a { color: var(--texte-doux); text-decoration: none; font-size: 0.92rem; }
+.entete nav a:hover { color: var(--accent-clair); }
+
+.contenu {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.2rem 3rem;
+}
+
+.pied {
+  padding: 1.2rem;
+  border-top: 1px solid var(--bordure);
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 0.6rem; }
+h2 { font-size: 1.15rem; margin: 0 0 0.5rem; }
+
+.chapeau { color: var(--texte-doux); margin-top: 0; }
+.petit { font-size: 0.85rem; color: var(--texte-doux); }
+
+/* --- Encarts ------------------------------------------------------------- */
+
+.encart {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--fond-encart);
+}
+
+.encart--info   { border-left: 4px solid var(--accent); }
+.encart--alerte { border-left: 4px solid var(--alerte); }
+.encart--todo   { border-left: 4px solid var(--alerte); background: #2a2419; }
+.encart p:last-child { margin-bottom: 0; }
+
+/* --- Catalogue ----------------------------------------------------------- */
+
+.grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: var(--fond-carte);
+}
+
+.carte .description { color: var(--texte-doux); font-size: 0.92rem; flex: 1; }
+
+.etats { margin: 0.6rem 0; padding: 0; list-style: none; font-size: 0.82rem; }
+.etats li { margin: 0.15rem 0; }
+.etats .ok { color: var(--ok); }
+.etats .manquant { color: var(--alerte); }
+
+.credits { margin-top: 0.8rem; margin-bottom: 0; }
+
+/* --- Boutons et liens ---------------------------------------------------- */
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center; margin-top: 0.4rem; }
+
+.bouton {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  border: none;
+  border-radius: var(--rayon);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bouton:hover { background: #3d7cbd; }
+.bouton:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.bouton--secondaire {
+  background: transparent;
+  border: 1px solid var(--bordure);
+  color: var(--texte);
+}
+
+.bouton--secondaire:hover { background: rgba(255, 255, 255, 0.06); }
+
+.lien-discret { font-size: 0.85rem; color: var(--texte-doux); }
+
+/* --- Test caméra --------------------------------------------------------- */
+
+.flux-video {
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  background: #000;
+  object-fit: cover;
+}
+
+.ligne-diagnostic { margin: 0.3rem 0; font-size: 0.92rem; }
+.ligne-diagnostic.ok { color: var(--ok); }
+.ligne-diagnostic.manquant { color: var(--alerte); }
+.ligne-diagnostic.info { color: var(--texte-doux); }
+
+/* --- Zone de scène 3D (atelier 2) ---------------------------------------- */
+
+.zone-modele {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 60vh;
+  margin: 1.2rem 0;
+  border: 1px dashed var(--bordure);
+  border-radius: var(--rayon);
+  background: #0e1116;
+}
+
+/* <model-viewer> doit recevoir une taille explicite, sinon il s'effondre
+   à une hauteur nulle et vous croirez que le modèle ne charge pas. */
+model-viewer {
+  width: 100%;
+  min-height: 60vh;
+  background: #0e1116;
+  border-radius: var(--rayon);
+}
+
+model-viewer [slot="ar-button"] {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* --- Fiche --------------------------------------------------------------- */
+
+.fiche { margin: 1.2rem 0; }
+.fiche dt { font-weight: 600; margin-top: 0.8rem; }
+.fiche dd { margin: 0.1rem 0 0; color: var(--texte-doux); }
