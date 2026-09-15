@@ -487,12 +487,6 @@ soutenance.
 5. **Cas d'usage** : un exemple documenté par catégorie (marketing, gaming, formation), avec
    bénéfice métier et limite technique associée.
 
-> 🔬 **Séquence démonstration (animée par l'enseignant) — le SLAM.**
-> Le SLAM n'étant pas praticable en WebAR universel (cf. § 4.3), il est montré ici :
-> détection de plans en direct via `<model-viewer>` sur un appareil compatible (mesurez la
-> dérive quand on masque la caméra !), puis lecture commentée de l'API `hit-test` de WebXR
-> et du *raycast* d'AR Foundation. **Objectif** : que les étudiants sachent *ce qu'ils ne
-> font pas* en ateliers 2–3, et pourquoi.
 
 ## Travail demandé
 
@@ -609,9 +603,18 @@ sur **« Voir dans ma pièce »**.
 
 ### Étape 5 — Régler l'échelle
 
-Posez le modèle au sol et regardez-le : est-il à la bonne taille ? Les unités glTF sont en
-**mètres**. Un modèle exporté en centimètres apparaîtra 100 fois trop grand. Corrigez via
-l'attribut `scale` ou en réexportant le modèle.
+Appuyez sur **« Voir dans ma pièce »**, balayez lentement le sol avec la caméra jusqu'à ce
+que la surface soit détectée, puis touchez l'écran pour y déposer le modèle. Reculez de
+quelques pas et jugez sa taille par rapport au mobilier réel.
+
+C'est la seule façon de vérifier une échelle : dans le visualiseur de la page,
+`<model-viewer>` recadre automatiquement le modèle, donc un objet de 1 cm et un objet de
+100 m s'affichent identiquement. Une fois l'objet ancré dans la pièce, il n'y a plus de
+recadrage : **les unités glTF sont des mètres**. Un modèle exporté en centimètres apparaît
+donc 100 fois trop grand.
+
+Corrigez via l'attribut `scale` de `<model-viewer>`, ou mieux, en réexportant le modèle aux
+bonnes unités.
 
 ## Exercices
 
