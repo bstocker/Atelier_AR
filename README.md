@@ -114,7 +114,7 @@ critères :
 ### 4.2 Les trois bibliothèques retenues, et ce que chacune enseigne
 
 Le choix n'est pas « une techno », mais **trois couches qui correspondent chacune à une
-famille de suivi du syllabus**. C'est cette correspondance qui structure la progression des
+famille de suivi**. C'est cette correspondance qui structure la progression des
 ateliers.
 
 | Atelier | Bibliothèque | Famille de suivi | Ce que l'étudiant·e apprend |
@@ -131,10 +131,10 @@ ateliers.
    applicative dans la scène AR — en fait un « Hello World » idéal et rien de plus.
 2. **AR.js** et **MindAR** font de la **vision par ordinateur en JavaScript**. Ils
    fonctionnent donc sur *n'importe quel* navigateur avec une caméra, indépendamment
-   d'ARCore/ARKit — c'est ce qui garantit qu'aucun·e étudiant·e ne reste sur le carreau. En
+   d'ARCore/ARKit — c'est ce qui garantit de fonctionnement. En
    contrepartie, la scène est entièrement sous votre contrôle : on peut y brancher l'API
    Flask, de l'UI, de la logique métier.
-3. **A-Frame est déclaratif** : la scène 3D s'écrit en balises HTML. Les étudiant·e·s
+3. **A-Frame est déclaratif** : la scène 3D s'écrit en balises HTML. Les utilisateurs
    *voient* le graphe de scène, les repères et les transformations dans le DOM, là où un
    éditeur graphique les cacherait dans des panneaux.
 
@@ -149,13 +149,13 @@ standard W3C, il donne accès au *hit-test*, à la détection de plans et aux an
 tous les iPhone de la promotion.
 
 👉 **Conséquence pédagogique assumée :** le **SLAM et l'ancrage** ne font donc pas l'objet
-d'un TP. Ils sont traités **théoriquement en atelier 1** et **démontrés par l'enseignant·e**
+d'un TP. Ils sont traités **théoriquement en atelier 1** et **démontrés par votre enseignant**
 sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'exposer). Les
 étudiant·e·s qui veulent les manipuler trouveront la voie WebXR et Unity en **annexe A**.
 
 ### 4.4 Adéquation à PythonAnywhere
 
-| Contrainte PythonAnywhere (offre gratuite) | Impact sur ce projet |
+| Contrainte PythonAnywhere | Impact sur ce projet |
 |---|---|
 | **HTTPS avec certificat valide** | ✅ **C'est l'atout décisif** : condition d'accès à la caméra. |
 | Pas de mise en veille / pas de *cold start* | ✅ Le QR code projeté en salle répond instantanément. |
@@ -181,7 +181,7 @@ sur un appareil Android (ou via `<model-viewer>`, qui en fait usage sans l'expos
 > L'atelier 0 installe l'infrastructure et doit être terminé avant tout le reste : il
 > conditionne l'accès à la caméra. Les ateliers 1 et 2 posent le socle conceptuel et
 > technique ; l'atelier 3 consolide par la pratique guidée ; l'atelier 4 met les acquis en
-> autonomie. Conformément au syllabus, le projet de l'atelier 4 peut être décliné **en RA ou
+> autonomie. Conformément au besion, le projet de l'atelier 4 peut être décliné **en RA ou
 > en RV**.
 
 ## 6. Arborescence du dépôt
@@ -409,7 +409,7 @@ le flux vidéo.
 > bibliothèques AR échouent sans message clair. C'est très précisément le service que vous
 > rend PythonAnywhere.
 
-**💡 Astuce de salle de cours.** Générez un QR code de votre URL
+**💡 Astuce** Générez un QR code de votre URL
 (<https://api.qrserver.com/> ou l'extension de votre navigateur) et collez-le dans votre
 `README`. Tester sur téléphone devient instantané, et c'est ce que vous projetterez en
 soutenance.
