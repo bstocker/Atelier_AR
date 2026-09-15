@@ -61,7 +61,7 @@ une dépendance technique du projet.
 - concevoir, développer et livrer une **application AR selon une logique MVP** ;
 - travailler en groupe en respectant des jalons et une démarche de prototypage.
 
-Ces objectifs couvrent les trois sections du syllabus : **Introduction**,
+Ces objectifs couvrent les trois sections du suivantes : **Introduction**,
 **Développement d'applications** et **Cas pratiques / prototypage**.
 
 ## 2. Compétences visées (référentiel niveau 7)
